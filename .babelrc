@@ -1,0 +1,9 @@
+{
+	"presets": [
+		"babel-preset-niksy/next",
+		"babel-preset-niksy"
+	],
+	"plugins": [
+		"@babel/plugin-transform-object-assign"
+	]
+}
