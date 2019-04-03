@@ -1,16 +1,10 @@
 'use strict';
 
-const minimist = require('minimist');
+const path = require('path');
 
 let config;
 
-const args = minimist(process.argv.slice(2), {
-	'default': {
-		local: false
-	}
-});
-
-const local = args.local;
+const local = typeof process.env.CI === 'undefined' || process.env.CI === 'false';
 const port = 9001;
 
 if ( local ) {
@@ -19,7 +13,10 @@ if ( local ) {
 	};
 } else {
 	config = {
+		hostname: 'bs-local.com',
 		browserStack: {
+			username: process.env.BROWSER_STACK_USERNAME,
+			accessKey: process.env.BROWSER_STACK_ACCESS_KEY,
 			startTunnel: true,
 			project: 'delegate-event-listener',
 			name: 'Automated (Karma)',
@@ -63,7 +60,7 @@ module.exports = function ( baseConfig ) {
 
 	baseConfig.set(Object.assign({
 		basePath: '',
-		frameworks: ['mocha'],
+		frameworks: ['mocha', 'fixture'],
 		files: [
 			'test/**/*.html',
 			'test/**/.webpack.js'
