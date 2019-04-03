@@ -2,6 +2,8 @@
 
 ## [Unreleased][]
 
+## [1.0.1][] - 2019-04-03
+
 ### Fixed
 
 - Elements inside selector which is used as delegation are now properly matched
@@ -13,5 +15,6 @@
 - Initial implementation
 
 
-[Unreleased]: https://github.com/niksy/delegate-event-listener/compare/v1.0.0...HEAD
+[Unreleased]: https://github.com/niksy/delegate-event-listener/compare/v1.0.1...HEAD
+[1.0.1]: https://github.com/niksy/delegate-event-listener/compare/v1.0.0...v1.0.1
 [1.0.0]: https://github.com/niksy/delegate-event-listener/tree/v1.0.0
