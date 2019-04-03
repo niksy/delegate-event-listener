@@ -10,7 +10,8 @@ before(function () {
 	elements = [
 		document.querySelector('#jackie'),
 		document.querySelector('#frankie'),
-		document.querySelector('#sally')
+		document.querySelector('#sally'),
+		document.querySelector('#moose')
 	];
 });
 
@@ -20,7 +21,7 @@ after(function () {
 
 it('should handle delegated event', function () {
 
-	const [ jackie, frankie, sally ] = elements;
+	const [ jackie, frankie, sally, moose ] = elements;
 
 	const callback = sinon.spy();
 	const listener = fn('#frankie', callback);
@@ -31,9 +32,10 @@ it('should handle delegated event', function () {
 	simulant.fire(frankie, 'click');
 	simulant.fire(frankie, 'click');
 	simulant.fire(sally, 'click');
+	simulant.fire(moose, 'click');
 
 	assert.equal(callback.called, true);
-	assert.equal(callback.callCount, 2);
+	assert.equal(callback.callCount, 3);
 
 	jackie.removeEventListener('click', listener);
 
@@ -41,7 +43,7 @@ it('should handle delegated event', function () {
 
 it('should handle unbounded delegated event', function () {
 
-	const [ jackie, frankie, sally ] = elements;
+	const [ jackie, frankie, sally, moose ] = elements;
 
 	const callback = sinon.spy();
 	const listener = fn('#frankie', callback);
@@ -52,6 +54,7 @@ it('should handle unbounded delegated event', function () {
 	simulant.fire(jackie, 'click');
 	simulant.fire(frankie, 'click');
 	simulant.fire(sally, 'click');
+	simulant.fire(moose, 'click');
 
 	assert.equal(callback.called, false);
 	assert.equal(callback.callCount, 0);

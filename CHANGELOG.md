@@ -2,6 +2,10 @@
 
 ## [Unreleased][]
 
+### Fixed
+
+- Elements inside selector which is used as delegation are now properly matched
+
 ## [1.0.0][] - 2019-01-04
 
 ### Added
