@@ -2,6 +2,10 @@
 
 ## [Unreleased][]
 
+- Add `event.delegateTarget` property to `Event` object
+- Prevent listener triggering if one of ancestors is disabled form element
+- Upgrade package
+
 ## [1.0.1][] - 2019-04-03
 
 ### Fixed

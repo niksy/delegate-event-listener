@@ -5,6 +5,13 @@
 
 Delegate event listener.
 
+Features:
+
+-   Flexible usage with native `addEventListener` and `removeEventListener`
+-   Current target reference with `event.delegateTarget` property
+-   Prevents listener triggering if target element is inside form `[disabled]`
+    element
+
 ## Install
 
 ```sh
@@ -30,7 +37,8 @@ const element = document.querySelector('#jackie');
 
 element.addEventListener(
 	'click',
-	delegate('#frankie', () => {
+	delegate('#frankie', (e) => {
+		// e.delegateTarget === document.querySelector('#frankie')
 		// Clicked on #frankie!
 	})
 );
@@ -55,6 +63,13 @@ CSS selector whose ancestor is element on which event handler is attached.
 Type: `Function`
 
 Event listener for event handler.
+
+Native `Event` object is decorated with `event.delegateTarget` property. This
+property is same as node resolved from selector. `event.currentTarget` is equal
+to node on which event listener is attached.
+
+For non-delegated event handlers attached directly to an element,
+`event.delegateTarget` will always be equal to `event.currentTarget`.
 
 ## Browser support
 
