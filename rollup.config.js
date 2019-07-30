@@ -23,6 +23,8 @@ module.exports = {
 			exclude: 'node_modules/**'
 		}),
 		nodeResolve(),
-		commonJs()
+		commonJs({
+			sourceMap: true
+		})
 	]
 };

@@ -1,5 +1,3 @@
 {
-	"extends": [
-		"niksy/tests"
-	]
+	"extends": ["niksy/tests"]
 }

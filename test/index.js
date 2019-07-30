@@ -5,7 +5,7 @@ import fn from '../index';
 
 let elements = [];
 
-before(function () {
+before(function() {
 	window.fixture.load('/test/fixtures/index.html');
 	elements = [
 		document.querySelector('#jackie'),
@@ -15,13 +15,12 @@ before(function () {
 	];
 });
 
-after(function () {
+after(function() {
 	window.fixture.cleanup();
 });
 
-it('should handle delegated event', function () {
-
-	const [ jackie, frankie, sally, moose ] = elements;
+it('should handle delegated event', function() {
+	const [jackie, frankie, sally, moose] = elements;
 
 	const callback = sinon.spy();
 	const listener = fn('#frankie', callback);
@@ -38,12 +37,10 @@ it('should handle delegated event', function () {
 	assert.equal(callback.callCount, 3);
 
 	jackie.removeEventListener('click', listener);
-
 });
 
-it('should handle unbounded delegated event', function () {
-
-	const [ jackie, frankie, sally, moose ] = elements;
+it('should handle unbounded delegated event', function() {
+	const [jackie, frankie, sally, moose] = elements;
 
 	const callback = sinon.spy();
 	const listener = fn('#frankie', callback);
@@ -58,5 +55,4 @@ it('should handle unbounded delegated event', function () {
 
 	assert.equal(callback.called, false);
 	assert.equal(callback.callCount, 0);
-
 });

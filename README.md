@@ -1,6 +1,7 @@
 # delegate-event-listener
 
-[![Build Status][ci-img]][ci] [![BrowserStack Status][browserstack-img]][browserstack]
+[![Build Status][ci-img]][ci]
+[![BrowserStack Status][browserstack-img]][browserstack]
 
 Delegate event listener.
 
@@ -12,7 +13,8 @@ npm install delegate-event-listener --save
 
 ## Usage
 
-Given following markup and JS functionality clicking only on `#frankie` will trigger event listener even though event handler is attached on `#jackie`.
+Given following markup and JS functionality clicking only on `#frankie` will
+trigger event listener even though event handler is attached on `#jackie`.
 
 ```html
 <div id="jackie">
@@ -26,9 +28,12 @@ import delegate from 'delegate-event-listener';
 
 const element = document.querySelector('#jackie');
 
-element.addEventListener('click', delegate('#frankie', () => {
-	// Clicked on #frankie!
-}));
+element.addEventListener(
+	'click',
+	delegate('#frankie', () => {
+		// Clicked on #frankie!
+	})
+);
 ```
 
 ## API
@@ -57,13 +62,18 @@ Tested in IE9+ and all modern browsers.
 
 ## Test
 
-For automated tests, run `npm run test:automated` (append `:watch` for watcher support).
+For automated tests, run `npm run test:automated` (append `:watch` for watcher
+support).
 
 ## License
 
 MIT © [Ivan Nikolić](http://ivannikolic.com)
 
+<!-- prettier-ignore-start -->
+
 [ci]: https://travis-ci.com/niksy/delegate-event-listener
 [ci-img]: https://travis-ci.com/niksy/delegate-event-listener.svg?branch=master
 [browserstack]: https://www.browserstack.com/
 [browserstack-img]: https://www.browserstack.com/automate/badge.svg?badge_key=aVRta1E1ZzVlcEJCT2Fxb1Vlb0F4bjlzUmhIbGVDNCs3K1Mya3FlcE40UT0tLVJKUXFwQTdpcXMvRjRRbG41bFV6Znc9PQ==--9d47cf877e05bb7a93d3d4fb570deb64c9a659a7
+
+<!-- prettier-ignore-end -->
