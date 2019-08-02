@@ -71,6 +71,26 @@ to node on which event listener is attached.
 For non-delegated event handlers attached directly to an element,
 `event.delegateTarget` will always be equal to `event.currentTarget`.
 
+## FAQ
+
+### Triggering custom event doesn’t run listener function
+
+Event propagation in `Event` constructor is not active by default. You have to explicitly enable it.
+
+```js
+document.body.addEventListener(
+	'click',
+	delegate('button', () => {
+		// …
+	})
+);
+
+// Setting `bubbles: true` makes event propagation active
+document
+	.querySelector('button')
+	.dispatchEvent(new Event('click', { bubbles: true }));
+```
+
 ## Browser support
 
 Tested in IE9+ and all modern browsers.
