@@ -1,19 +1,25 @@
 'use strict';
 
 const path = require('path');
-const resolve = require('rollup-plugin-node-resolve');
-const commonjs = require('rollup-plugin-commonjs');
+const fs = require('fs');
+const { default: resolve } = require('@rollup/plugin-node-resolve');
+const commonjs = require('@rollup/plugin-commonjs');
 const nodeBuiltins = require('rollup-plugin-node-builtins');
 const globals = require('rollup-plugin-node-globals');
-const babel = require('rollup-plugin-babel');
+const { default: babel } = require('@rollup/plugin-babel');
 const istanbul = require('rollup-plugin-istanbul');
 const rollupConfig = require('./rollup.config');
 
 let config;
 
-const local =
-	typeof process.env.CI === 'undefined' || process.env.CI === 'false';
-const port = 9001;
+const isCI =
+	typeof process.env.CI !== 'undefined' && process.env.CI !== 'false';
+const isPR =
+	typeof process.env.TRAVIS_PULL_REQUEST !== 'undefined' &&
+	process.env.TRAVIS_PULL_REQUEST !== 'false';
+const local = !isCI || (isCI && isPR);
+
+const port = 0;
 
 if (local) {
 	config = {
@@ -64,81 +70,73 @@ if (local) {
 	};
 }
 
-module.exports = function(baseConfig) {
-	baseConfig.set(
-		Object.assign(
-			{
-				basePath: '',
-				frameworks: ['mocha', 'fixture'],
-				files: [
-					'test/**/*.html',
-					{ pattern: 'test/**/*.js', watched: false }
-				],
-				exclude: [],
-				preprocessors: {
-					'test/**/*.html': ['html2js'],
-					'test/**/*.js': ['rollup', 'sourcemap']
-				},
-				reporters: ['mocha', 'coverage-istanbul'],
-				port: port,
-				colors: true,
-				logLevel: baseConfig.LOG_INFO,
-				autoWatch: false,
-				client: {
-					captureConsole: true
-				},
-				browserConsoleLogOptions: {
-					level: 'log',
-					format: '%b %T: %m',
-					terminal: true
-				},
-				rollupPreprocessor: {
-					plugins: [
-						nodeBuiltins(),
-						babel({
-							exclude: 'node_modules/**',
-							runtimeHelpers: true
-						}),
-						resolve({
-							preferBuiltins: true
-						}),
-						commonjs(),
-						babel({
-							include:
-								'node_modules/{has-flag,supports-color}/**',
-							runtimeHelpers: true,
-							babelrc: false,
-							configFile: path.resolve(__dirname, '.babelrc')
-						}),
-						globals(),
-						...rollupConfig.plugins.filter(
-							({ name }) => !['babel'].includes(name)
-						),
-						istanbul({
-							exclude: ['test/**/*.js', 'node_modules/**/*']
-						})
-					],
-					output: {
-						format: 'iife',
-						name: 'delegateEventListener',
-						sourcemap: baseConfig.autoWatch ? false : 'inline', // Source map support has weird behavior in watch mode
-						intro: 'window.TYPED_ARRAY_SUPPORT = false;' // IE9
-					}
-				},
-				coverageIstanbulReporter: {
-					dir: path.join(__dirname, 'coverage/%browser%'),
-					fixWebpackSourcePaths: true,
-					reports: ['html', 'text'],
-					thresholds: {
-						global: {
-							statements: 80
-						}
-					}
-				},
-				singleRun: true,
-				concurrency: Infinity
-			},
-			config
-		)
-	);
+module.exports = function (baseConfig) {
+	baseConfig.set({
+		basePath: '',
+		frameworks: ['mocha', 'fixture'],
+		files: ['test/**/*.html', { pattern: 'test/**/*.js', watched: false }],
+		exclude: [],
+		preprocessors: {
+			'test/**/*.html': ['html2js'],
+			'test/**/*.js': ['rollup', 'sourcemap']
+		},
+		reporters: ['mocha', 'coverage-istanbul'],
+		port: port,
+		colors: true,
+		logLevel: baseConfig.LOG_INFO,
+		autoWatch: false,
+		client: {
+			captureConsole: true
+		},
+		browserConsoleLogOptions: {
+			level: 'log',
+			format: '%b %T: %m',
+			terminal: true
+		},
+		rollupPreprocessor: {
+			plugins: [
+				nodeBuiltins(),
+				babel({
+					exclude: 'node_modules/**',
+					babelHelpers: 'runtime'
+				}),
+				resolve({
+					preferBuiltins: true
+				}),
+				commonjs(),
+				babel({
+					include: 'node_modules/{has-flag,supports-color}/**',
+					babelHelpers: 'runtime',
+					babelrc: false,
+					configFile: path.resolve(__dirname, '.babelrc')
+				}),
+				globals(),
+				...rollupConfig.plugins.filter(
+					({ name }) => !['babel'].includes(name)
+				),
+				istanbul({
+					exclude: ['test/**/*.js', 'node_modules/**/*']
+				})
+			],
+			output: {
+				format: 'iife',
+				name: 'delegateEventListener',
+				sourcemap: baseConfig.autoWatch ? false : 'inline', // Source map support has weird behavior in watch mode
+				intro: 'window.TYPED_ARRAY_SUPPORT = false;' // IE9
+			}
+		},
+		coverageIstanbulReporter: {
+			dir: path.join(__dirname, 'coverage/%browser%'),
+			fixWebpackSourcePaths: true,
+			reports: ['html', 'text'],
+			thresholds: {
+				global: JSON.parse(
+					fs.readFileSync(path.join(__dirname, '.nycrc'), 'utf8')
+				)
+			}
+		},
+		singleRun: true,
+		concurrency: Infinity,
+		...config
+	});
 };

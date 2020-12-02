@@ -7,7 +7,7 @@
 	},
 	"overrides": [
 		{
-			"files": ["karma.conf.js"],
+			"files": ["karma.conf.js", "rollup.config.js"],
 			"env": {
 				"node": true,
 				"es6": true
