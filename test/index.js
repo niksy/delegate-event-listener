@@ -1,11 +1,11 @@
 import assert from 'assert';
 import sinon from 'sinon';
 import simulant from 'simulant';
-import fn from '../index';
+import function_ from '../index';
 
 let elements = {};
 
-before(function() {
+before(function () {
 	window.fixture.load('/test/fixtures/index.html');
 	elements = {
 		jackie: document.querySelector('#jackie'),
@@ -17,15 +17,15 @@ before(function() {
 	};
 });
 
-after(function() {
+after(function () {
 	window.fixture.cleanup();
 });
 
-it('should handle delegated event', function() {
+it('should handle delegated event', function () {
 	const { jackie, frankie, sally, moose } = elements;
 
 	const callback = sinon.spy();
-	const listener = fn('#frankie', callback);
+	const listener = function_('#frankie', callback);
 
 	jackie.addEventListener('click', listener);
 
@@ -44,11 +44,11 @@ it('should handle delegated event', function() {
 	jackie.removeEventListener('click', listener);
 });
 
-it('should handle unbounded delegated event', function() {
+it('should handle unbounded delegated event', function () {
 	const { jackie, frankie, sally, moose } = elements;
 
 	const callback = sinon.spy();
-	const listener = fn('#frankie', callback);
+	const listener = function_('#frankie', callback);
 
 	jackie.addEventListener('click', listener);
 	jackie.removeEventListener('click', listener);
@@ -62,11 +62,11 @@ it('should handle unbounded delegated event', function() {
 	assert.equal(callback.callCount, 0);
 });
 
-it('shouldn’t trigger delegated event if target is inside disabled element', function() {
+it('shouldn’t trigger delegated event if target is inside disabled element', function () {
 	const { finn, baby } = elements;
 
 	const callback = sinon.spy();
-	const listener = fn('#baby', callback);
+	const listener = function_('#baby', callback);
 
 	finn.addEventListener('click', listener);
 

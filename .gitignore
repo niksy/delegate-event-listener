@@ -5,7 +5,6 @@ yarn.lock
 npm-debug.log
 local.log
 coverage/
-index.cjs.js
-index.esm.js
-index.cjs.js.map
-index.esm.js.map
+cjs/
+esm/
+!test/fixtures/node_modules/
