@@ -2,26 +2,36 @@
 
 ## [Unreleased][]
 
+### Added
+
+-   Support for non-delegated events
+    ([#5](https://github.com/niksy/delegate-event-listener/issues/5))
+
+*   Documentation about custom events and event propagation
+
 ## [1.1.0][] - 2019-07-30
 
-- Add `event.delegateTarget` property to `Event` object
-- Prevent listener triggering if one of ancestors is disabled form element
-- Upgrade package
+### Changed
+
+-   Add `event.delegateTarget` property to `Event` object
+-   Prevent listener triggering if one of ancestors is disabled form element
+-   Upgrade package
 
 ## [1.0.1][] - 2019-04-03
 
 ### Fixed
 
-- Elements inside selector which is used as delegation are now properly matched
+-   Elements inside selector which is used as delegation are now properly
+    matched
 
 ## [1.0.0][] - 2019-01-04
 
 ### Added
 
-- Initial implementation
+-   Initial implementation
 
-
-[Unreleased]: https://github.com/niksy/delegate-event-listener/compare/v1.1.0...HEAD
-[1.1.0]: https://github.com/niksy/delegate-event-listener/compare/v1.0.1...v1.1.0
-[1.0.1]: https://github.com/niksy/delegate-event-listener/compare/v1.0.0...v1.0.1
+[1.1.0]:
+	https://github.com/niksy/delegate-event-listener/compare/v1.0.1...v1.1.0
+[1.0.1]:
+	https://github.com/niksy/delegate-event-listener/compare/v1.0.0...v1.0.1
 [1.0.0]: https://github.com/niksy/delegate-event-listener/tree/v1.0.0

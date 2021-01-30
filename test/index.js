@@ -85,3 +85,84 @@ it('shouldn’t trigger delegated event if target is inside disabled element', f
 
 	finn.removeEventListener('click', listener);
 });
+
+describe('Alternative function output', function () {
+	it('should handle delegated event', function () {
+		const { jackie, frankie, sally, moose } = elements;
+
+		const callback = sinon.spy();
+		const [eventName, listener] = function_(
+			'mouseenter',
+			'#frankie',
+			callback
+		);
+
+		jackie.addEventListener(eventName, listener);
+
+		simulant.fire(jackie, eventName);
+		simulant.fire(frankie, eventName);
+		simulant.fire(frankie, eventName);
+		simulant.fire(sally, eventName);
+		simulant.fire(moose, eventName);
+
+		const [event] = callback.firstCall.args;
+
+		assert.equal(callback.called, true);
+		assert.equal(callback.callCount, 3);
+		assert.equal(event.delegateTarget, frankie);
+		assert.equal(event.originalEventType, 'mouseenter');
+		assert.equal(event.type, 'mouseover');
+
+		jackie.removeEventListener(eventName, listener);
+	});
+
+	it('should handle unbounded delegated event', function () {
+		const { jackie, frankie, sally, moose } = elements;
+
+		const callback = sinon.spy();
+		const [eventName, listener] = function_(
+			'mouseenter',
+			'#frankie',
+			callback
+		);
+
+		jackie.addEventListener(eventName, listener);
+		jackie.removeEventListener(eventName, listener);
+
+		simulant.fire(jackie, eventName);
+		simulant.fire(frankie, eventName);
+		simulant.fire(sally, eventName);
+		simulant.fire(moose, eventName);
+
+		assert.equal(callback.called, false);
+		assert.equal(callback.callCount, 0);
+	});
+
+	it('shouldn’t trigger delegated event if target is inside disabled element', function () {
+		const { finn, baby } = elements;
+
+		const callback = sinon.spy();
+		const [eventName, listener] = function_(
+			'mouseenter',
+			'#baby',
+			callback
+		);
+
+		finn.addEventListener(eventName, listener);
+
+		finn.disabled = true;
+
+		simulant.fire(baby, eventName);
+		simulant.fire(baby, eventName);
+		simulant.fire(baby, eventName);
+
+		finn.disabled = false;
+
+		simulant.fire(baby, eventName);
+
+		assert.equal(callback.called, true);
+		assert.equal(callback.callCount, 1);
+
+		finn.removeEventListener(eventName, listener);
+	});
+});

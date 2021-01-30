@@ -11,6 +11,8 @@ Features:
 -   Current target reference with `event.delegateTarget` property
 -   Prevents listener triggering if target element is inside form `[disabled]`
     element
+-   Handles delegating of non-delegated events such as `focus`, `blur`,
+    `mouseenter/leave`, `pointerenter/leave`
 
 ## Install
 
@@ -42,19 +44,44 @@ element.addEventListener(
 		// Clicked on #frankie!
 	})
 );
+
+// Delegating non-delegated events such as `focus` is achieved with alternative function output
+element.addEventListener(
+	...delegate('focus', '#frankie', (e) => {
+		// e.delegateTarget === document.querySelector('#frankie')
+		// Clicked on #frankie!
+	})
+);
 ```
 
 ## API
 
-### delegate(selector, listener)
+### delegate([eventName, ]selector, listener)
 
-Returns: `Function`
+Returns: `Function|array`
 
 Delegated function.
 
+If delegate function call contains 3 arguments, first argument is event name
+which will then be used to resolve proper delegated event. Array of values is
+then returned, first argument being event name used to fix event (e.g.
+`mouseover` for `mouseenter`), and second argument being event handler. Those
+values should then be applied to `addEventListener` (either via spreading or
+manual assignment).
+
+Original event (one which was supplied to function) is available as
+`event.originalEventType`. Resolved event is available to native `event.type`:
+
+#### eventName
+
+Type: `string`
+
+Event name. Used only for alternative function output. Event will be mapped to
+proper delegatable event (e.g. `mouseenter` for `mouseover`).
+
 #### selector
 
-Type: `String`
+Type: `string`
 
 CSS selector whose ancestor is element on which event handler is attached.
 
@@ -75,7 +102,8 @@ For non-delegated event handlers attached directly to an element,
 
 ### Triggering custom event doesn’t run listener function
 
-Event propagation in `Event` constructor is not active by default. You have to explicitly enable it.
+Event propagation in `Event` constructor is not active by default. You have to
+explicitly enable it.
 
 ```js
 document.body.addEventListener(
