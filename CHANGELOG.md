@@ -2,6 +2,8 @@
 
 ## [Unreleased][]
 
+## [1.2.0][] - 2021-01-30
+
 ### Added
 
 -   Support for non-delegated events
@@ -40,3 +42,6 @@
 [1.0.1]:
 	https://github.com/niksy/delegate-event-listener/compare/v1.0.0...v1.0.1
 [1.0.0]: https://github.com/niksy/delegate-event-listener/tree/v1.0.0
+[unreleased]:
+	https://github.com/niksy/delegate-event-listener/compare/v1.2.0...HEAD
+[1.2.0]: https://github.com/niksy/delegate-event-listener/tree/v1.2.0
