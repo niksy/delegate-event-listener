@@ -139,6 +139,6 @@ MIT © [Ivan Nikolić](http://ivannikolic.com)
 [ci]: https://travis-ci.com/niksy/delegate-event-listener
 [ci-img]: https://travis-ci.com/niksy/delegate-event-listener.svg?branch=master
 [browserstack]: https://www.browserstack.com/
-[browserstack-img]: https://www.browserstack.com/automate/badge.svg?badge_key=aVRta1E1ZzVlcEJCT2Fxb1Vlb0F4bjlzUmhIbGVDNCs3K1Mya3FlcE40UT0tLVJKUXFwQTdpcXMvRjRRbG41bFV6Znc9PQ==--9d47cf877e05bb7a93d3d4fb570deb64c9a659a7
+[browserstack-img]: https://www.browserstack.com/automate/badge.svg?badge_key=M1I1MHNIL2l2N1lSTVRNMjdEU09haDdKS2MvR0VNdjNLL3c5NGVydDJ0UT0tLUNCNTFvYWFwRjYzWkZjaEJsMEVXaGc9PQ==--61b9e0c915eac985bb6c4a299b2d37e55f33ff8e
 
 <!-- prettier-ignore-end -->
