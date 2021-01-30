@@ -29,6 +29,15 @@ export default (...arguments_) => {
 	const [eventName, selector, listener] = arguments_;
 
 	const wrappedListener = (e) => {
+		if (selector === '') {
+			e.delegateTarget = e.target;
+			if (handleEventName) {
+				e.originalEventType = eventName;
+			}
+			listener(e);
+			return;
+		}
+
 		const disabledAncestor = closest(e.target, disabledElementsSelector);
 		const closestNode = closest(e.target, selector);
 		const isDelegated =

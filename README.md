@@ -83,7 +83,9 @@ proper delegatable event (e.g. `mouseenter` for `mouseover`).
 
 Type: `string`
 
-CSS selector whose ancestor is element on which event handler is attached.
+CSS selector whose ancestor is element on which event handler is attached. If
+it’s empty string, event handler will be attached to element which called
+`addEventListener`.
 
 #### listener
 

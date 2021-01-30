@@ -7,7 +7,12 @@
 -   Support for non-delegated events
     ([#5](https://github.com/niksy/delegate-event-listener/issues/5))
 
-*   Documentation about custom events and event propagation
+-   Documentation about custom events and event propagation
+
+### Changed
+
+-   Empty string selector bounds event handler to element which called
+    `addEventListener`
 
 ## [1.1.0][] - 2019-07-30
 

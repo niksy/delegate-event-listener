@@ -86,6 +86,29 @@ it('shouldn’t trigger delegated event if target is inside disabled element', f
 	finn.removeEventListener('click', listener);
 });
 
+it('should handle empty selector', function () {
+	const { jackie, frankie, sally, moose } = elements;
+
+	const callback = sinon.spy();
+	const listener = function_('', callback);
+
+	jackie.addEventListener('click', listener);
+
+	simulant.fire(jackie, 'click');
+	simulant.fire(frankie, 'click');
+	simulant.fire(frankie, 'click');
+	simulant.fire(sally, 'click');
+	simulant.fire(moose, 'click');
+
+	const [event] = callback.firstCall.args;
+
+	assert.equal(callback.called, true);
+	assert.equal(callback.callCount, 5);
+	assert.equal(event.delegateTarget, jackie);
+
+	jackie.removeEventListener('click', listener);
+});
+
 describe('Alternative function output', function () {
 	it('should handle delegated event', function () {
 		const { jackie, frankie, sally, moose } = elements;
@@ -164,5 +187,30 @@ describe('Alternative function output', function () {
 		assert.equal(callback.callCount, 1);
 
 		finn.removeEventListener(eventName, listener);
+	});
+
+	it('should handle empty selector', function () {
+		const { jackie, frankie, sally, moose } = elements;
+
+		const callback = sinon.spy();
+		const [eventName, listener] = function_('mouseenter', '', callback);
+
+		jackie.addEventListener(eventName, listener);
+
+		simulant.fire(jackie, eventName);
+		simulant.fire(frankie, eventName);
+		simulant.fire(frankie, eventName);
+		simulant.fire(sally, eventName);
+		simulant.fire(moose, eventName);
+
+		const [event] = callback.firstCall.args;
+
+		assert.equal(callback.called, true);
+		assert.equal(callback.callCount, 5);
+		assert.equal(event.delegateTarget, jackie);
+		assert.equal(event.originalEventType, 'mouseenter');
+		assert.equal(event.type, 'mouseover');
+
+		jackie.removeEventListener(eventName, listener);
 	});
 });
